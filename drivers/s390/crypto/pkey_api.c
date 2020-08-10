@@ -80,7 +80,7 @@ struct clearaeskeytoken {
 	u8  res1[3];
 	u32 keytype;	 /* key type, one of the PKEY_KEYTYPE values */
 	u32 len;	 /* bytes actually stored in clearkey[] */
-	u8  clearkey[0]; /* clear key value */
+	u8  clearkey[]; /* clear key value */
 } __packed;
 
 /*
@@ -1603,8 +1603,8 @@ static ssize_t pkey_ccacipher_aes_attr_read(enum pkey_key_size keybits,
 		if (rc == 0)
 			break;
 	}
-		if (rc)
-			return rc;
+	if (rc)
+		return rc;
 
 	if (is_xts) {
 		keysize = CCACIPHERTOKENSIZE;

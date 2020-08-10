@@ -62,11 +62,11 @@
 	SRI(DP_DPHY_FAST_TRAINING, DP, id), \
 	SRI(DP_SEC_CNTL1, DP, id), \
 	SRI(DP_DPHY_BS_SR_SWAP_CNTL, DP, id), \
-	SRI(DP_DPHY_INTERNAL_CTRL, DP, id), \
 	SRI(DP_DPHY_HBR2_PATTERN_CONTROL, DP, id)
 
 
 #define LE_DCN10_REG_LIST(id)\
+	SRI(DP_DPHY_INTERNAL_CTRL, DP, id), \
 	LE_DCN_COMMON_REG_LIST(id)
 
 struct dcn10_link_enc_aux_registers {
@@ -153,6 +153,12 @@ struct dcn10_link_enc_registers {
 	uint32_t RAWLANE2_DIG_PCS_XF_RX_OVRD_IN_3;
 	uint32_t RAWLANE3_DIG_PCS_XF_RX_OVRD_IN_2;
 	uint32_t RAWLANE3_DIG_PCS_XF_RX_OVRD_IN_3;
+#if defined(CONFIG_DRM_AMD_DC_DCN3_0)
+	uint32_t TMDS_DCBALANCER_CONTROL;
+	uint32_t PHYA_LINK_CNTL2;
+	uint32_t PHYB_LINK_CNTL2;
+	uint32_t PHYC_LINK_CNTL2;
+#endif
 };
 
 #define LE_SF(reg_name, field_name, post_fix)\
@@ -575,4 +581,7 @@ void dcn10_aux_initialize(struct dcn10_link_encoder *enc10);
 
 enum signal_type dcn10_get_dig_mode(
 	struct link_encoder *enc);
+
+void dcn10_link_encoder_get_max_link_cap(struct link_encoder *enc,
+	struct dc_link_settings *link_settings);
 #endif /* __DC_LINK_ENCODER__DCN10_H__ */
